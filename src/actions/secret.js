@@ -1,5 +1,5 @@
 import {API_BASE_URL} from '../config';
-import {handleResponse} from './utils';
+import {normalizeResponseErrors} from './utils';
 
 export const FETCH_SECRET_SUCCESS = 'FETCH_SECRET_SUCCESS';
 export const fetchSecretSuccess = secret => ({
@@ -22,7 +22,8 @@ export const fetchSecret = () => (dispatch, getState) => {
             Authorization: `Bearer ${authToken}`
         }
     })
-    .then(res => handleResponse(res))
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .then(({secret}) => dispatch(fetchSecretSuccess(secret)))
     .catch(err => {
         dispatch(fetchSecretError(err));

@@ -2,7 +2,7 @@ import jwtDecode from 'jwt-decode';
 import {SubmissionError} from 'redux-form';
 
 import {API_BASE_URL} from '../config';
-import {handleResponse} from './utils';
+import {normalizeResponseErrors} from './utils';
 import {saveAuthToken, clearAuthToken} from '../local-storage';
 
 export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
@@ -28,6 +28,8 @@ const storeAuthInfo = (authToken, dispatch) => {
 };
 
 export const login = (username, password) => dispatch => {
+    // Base64 encode the string username:password, used in the basic
+    // auth field
     const token = btoa(`${username}:${password}`);
     return fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -36,7 +38,8 @@ export const login = (username, password) => dispatch => {
             Authorization: `Basic ${token}`
         }
     })
-    .then(res => handleResponse(res))
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .then(({authToken}) => storeAuthInfo(authToken, dispatch))
     .catch(err => {
         const {code} = err;
@@ -59,7 +62,8 @@ export const refreshAuthToken = () => (dispatch, getState) => {
             Authorization: `Bearer ${authToken}`
         }
     })
-    .then(res => handleResponse(res))
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .then(({authToken}) => storeAuthInfo(authToken, dispatch))
     .catch(err => {
         const {code} = err;
