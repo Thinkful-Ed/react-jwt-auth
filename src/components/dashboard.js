@@ -2,11 +2,11 @@ import React from 'react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import redirectIf from './redirect-if';
-import {fetchSecret} from '../actions/secret';
+import {fetchProtectedData} from '../actions/protected-data';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
-        this.props.dispatch(fetchSecret());
+        this.props.dispatch(fetchProtectedData());
     }
 
     render() {
@@ -18,8 +18,8 @@ export class Dashboard extends React.Component {
                 <div className="dashboard-name">
                     Name: {this.props.name}
                 </div>
-                <div className="dashboard-secret">
-                    Secret: {this.props.secret}
+                <div className="dashboard-protected-data">
+                    Protected data: {this.props.protectedData}
                 </div>
             </div>
         );
@@ -34,7 +34,7 @@ const mapStateToProps = state => {
         name: currentUser ?
             `${currentUser.firstName} ${currentUser.lastName}` :
             '',
-        secret: state.secret.secret
+        protectedData: state.protectedData.data
     };
 };
 

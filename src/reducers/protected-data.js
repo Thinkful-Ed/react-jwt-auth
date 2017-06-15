@@ -1,21 +1,21 @@
 import {
-    FETCH_SECRET_SUCCESS,
-    FETCH_SECRET_ERROR
-} from '../actions/secret';
+    FETCH_PROTECTED_DATA_SUCCESS,
+    FETCH_PROTECTED_DATA_ERROR
+} from '../actions/protected-data';
 
 const initialState = {
-    secret: '',
+    data: '',
     error: null
 };
 
 export default function reducer(state=initialState, action) {
-    if (action.type === FETCH_SECRET_SUCCESS) {
+    if (action.type === FETCH_PROTECTED_DATA_SUCCESS) {
         return Object.assign({}, state, {
-            secret: action.secret,
+            data: action.data,
             error: null
         });
     }
-    else if (action.type === FETCH_SECRET_ERROR) {
+    else if (action.type === FETCH_PROTECTED_DATA_ERROR) {
         return Object.assign({}, state, {
             error: action.error
         });
