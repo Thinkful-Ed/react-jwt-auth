@@ -23,7 +23,7 @@ export class LoginForm extends React.Component {
                 <label htmlFor="password">Password</label>
                 <Field component={Input} type="password" name="password" id="password"
                     validate={[required, nonEmpty]} />
-                <button>Log in</button>
+                <button disabled={this.props.invalid || this.props.submitting}>Log in</button>
             </form>
         );
     }
