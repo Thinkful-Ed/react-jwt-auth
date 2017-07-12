@@ -1,5 +1,4 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
 
@@ -65,8 +64,5 @@ const mapStateToProps = state => ({
     loggedIn: state.auth.currentUser !== null
 });
 
-export default compose(
-    // Deal with update blocking - https://reacttraining.com/react-router/web/guides/dealing-with-update-blocking
-    withRouter,
-    connect(mapStateToProps)
-)(App);
+// Deal with update blocking - https://reacttraining.com/react-router/web/guides/dealing-with-update-blocking
+export default withRouter(connect(mapStateToProps)(App));

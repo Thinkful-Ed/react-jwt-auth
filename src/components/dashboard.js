@@ -1,5 +1,4 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import redirectIf from './redirect-if';
 import {fetchProtectedData} from '../actions/protected-data';
@@ -38,9 +37,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default compose(
-    connect(mapStateToProps),
+export default connect(mapStateToProps)(
     // Only visible to logged in users
-    redirectIf(props => !props.loggedIn, '/')
-)(Dashboard);
+    redirectIf(props => !props.loggedIn, '/')(
+        Dashboard
+    )
+);
 

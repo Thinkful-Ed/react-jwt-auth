@@ -1,5 +1,4 @@
 import React from 'react';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -20,9 +19,10 @@ const mapStateToProps = state => ({
     loggedIn: state.auth.currentUser !== null
 });
 
-export default compose(
-    connect(mapStateToProps),
+export default connect(mapStateToProps)(
     // If we are logged in (which happens automatically when registration
     // is successful) redirect to the user's dashboard
-    redirectIf(props => props.loggedIn, '/dashboard'),
-)(RegistrationPage);
+    redirectIf(props => props.loggedIn, '/dashboard')(
+        RegistrationPage
+    )
+);
