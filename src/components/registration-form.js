@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, focus} from 'redux-form';
 import {registerUser} from '../actions/users';
 import {login} from '../actions/auth';
 import Input from './input';
@@ -48,7 +48,7 @@ export class RegistrationForm extends React.Component {
                 />
                 <button
                     type="submit"
-                    disabled={this.props.invalid || this.props.submitting}>
+                    disabled={this.props.pristine || this.props.submitting}>
                     Register
                 </button>
             </form>
@@ -56,4 +56,8 @@ export class RegistrationForm extends React.Component {
     }
 }
 
-export default reduxForm({form: 'registration'})(RegistrationForm);
+export default reduxForm({
+    form: 'registration',
+    onSubmitFail: (errors, dispatch) =>
+        dispatch(focus('registration', Object.keys(errors)[0]))
+})(RegistrationForm);
