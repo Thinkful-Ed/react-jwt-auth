@@ -31,12 +31,9 @@ export const login = (username, password) => dispatch => {
         fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username,
-                password
-            })
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ":" + password),
+            }
         })
             // Reject any requests which don't return a 200 status, creating
             // errors which follow a consistent format
