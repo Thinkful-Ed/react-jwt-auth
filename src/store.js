@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import {loadAuthToken} from './local-storage';
 import authReducer from './reducers/auth';
 import protectedDataReducer from './reducers/protected-data';
-import {setAuthToken, refreshAuthToken} from './actions/auth';
+import {setAuthToken} from './actions/auth';
 
 const store = createStore(
     combineReducers({
@@ -20,7 +20,6 @@ const authToken = loadAuthToken();
 if (authToken) {
     const token = authToken;
     store.dispatch(setAuthToken(token));
-    store.dispatch(refreshAuthToken());
 }
 
 export default store;
