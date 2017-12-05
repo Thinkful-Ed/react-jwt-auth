@@ -9,6 +9,14 @@ import RegistrationPage from './registration-page';
 import {refreshAuthToken} from '../actions/auth';
 
 export class App extends React.Component {
+    componentDidMount() {
+        if (this.props.hasAuthToken) {
+            // Try to get a fresh auth token if we had an existing one in
+            // localStorage
+            this.props.dispatch(refreshAuthToken());
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.loggedIn && !this.props.loggedIn) {
             // When we are logged in, refresh the auth token periodically
