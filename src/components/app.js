@@ -6,6 +6,7 @@ import HeaderBar from './header-bar';
 import LandingPage from './landing-page';
 import Dashboard from './dashboard';
 import RegistrationPage from './registration-page';
+import ActivityDialog from './activity-dialog';
 import {refreshAuthToken} from '../actions/auth';
 
 export class App extends React.Component {
@@ -26,7 +27,7 @@ export class App extends React.Component {
     startPeriodicRefresh() {
         this.refreshInterval = setInterval(
             () => this.props.dispatch(refreshAuthToken()),
-            60 * 60 * 1000 // One hour
+            10 * 60 * 1000 // Ten minutes
         );
     }
 
@@ -41,6 +42,7 @@ export class App extends React.Component {
     render() {
         return (
             <div className="app">
+                <ActivityDialog minutes={5} />
                 <HeaderBar />
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/dashboard" component={Dashboard} />
