@@ -33,8 +33,6 @@ export default class Input extends React.Component {
                     type={this.props.type}
                     ref={input => (this.input = input)}
                 />
-                {error}
-                {warning}
             </div>
         );
     }
