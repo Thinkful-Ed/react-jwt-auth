@@ -9,11 +9,11 @@ import RegistrationPage from './registration-page';
 import {refreshAuthToken} from '../actions/auth';
 
 export class App extends React.Component {
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.loggedIn && !this.props.loggedIn) {
+    componentDidUpdate(prevProps) {
+        if (!prevProps.loggedIn && this.props.loggedIn) {
             // When we are logged in, refresh the auth token periodically
             this.startPeriodicRefresh();
-        } else if (!nextProps.loggedIn && this.props.loggedIn) {
+        } else if (prevProps.loggedIn && !this.props.loggedIn) {
             // Stop refreshing when we log out
             this.stopPeriodicRefresh();
         }
