@@ -1,7 +1,7 @@
 import {SubmissionError} from 'redux-form';
 
 import {API_BASE_URL} from '../config';
-import {normalizeResponseErrors} from './utils';
+import {handleResponseErrors} from './utils';
 
 export const registerUser = user => dispatch => {
     return fetch(`${API_BASE_URL}/users`, {
@@ -11,7 +11,7 @@ export const registerUser = user => dispatch => {
         },
         body: JSON.stringify(user)
     })
-        .then(res => normalizeResponseErrors(res))
+        .then(res => handleResponseErrors(res))
         .then(res => res.json())
         .catch(err => {
             const {reason, message, location} = err;
